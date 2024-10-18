@@ -1,0 +1,93 @@
+from dict_data import complex_nested_dict
+
+# Print company information to ease visualisation
+for items, values in complex_nested_dict["company"].items():
+    print(items, values)
+    print("=======")
+
+print()
+# Challenge 1: Deep Data Access
+# Retrieve the name of the second ongoing project that Bob is working on and the first completed project Alice has finished. Access these values directly from the dictionary.
+
+print(f'The second ongoing project that Bob is working on is {complex_nested_dict.get("company",{}). get("employees")[1].get("projects").get("ongoing")[1]} \
+and the first completed project Alice has finished is {complex_nested_dict.get("company",{}). get("employees")[0].get("projects").get("completed")[0]}')
+
+# Challenge 2: Aggregating Data
+# Calculate the total budget of all departments in the company. You’ll need to iterate through the departments dictionary and sum up the budget values.
+
+# Access the departments
+departments=complex_nested_dict.get("company",{}).get("departments")
+
+print(departments)
+# Initialize total budget
+total_budget=0
+
+# Loop through each department and sum up the budgets
+for dept, value in departments.items():
+    total_budget+=value["budget"]
+print(total_budget)
+print()
+
+
+# Challenge 3: Skillset Expansion
+# Add a new skill, "SQL", to both employees' skillsets. You will need to iterate through the employees list, locate the skills for each employee, and append the new skill.
+
+employees=complex_nested_dict.get("company",{}).get("employees")
+print(employees)
+print()
+for person_dict in employees:
+        person_dict['skills'].append("SQL")
+        print(person_dict)
+        print()
+
+# Challenge 4 Recap: List Manipulation
+# Add a new employee named "Eve" to the company. She’s a Project Manager, 35 years old,
+# with skills in "Agile", "Scrum", and "Team Leadership". She has no completed or ongoing projects yet. Insert this into the employees list.
+
+print()
+Eve={
+    'name': 'Eve',
+    'age': 35,
+    'role': 'Project Manager',
+    'skills': ["Agile", "Scrum", "Team Leadership"],
+    'projects': {'ongoing': [], 'completed': []}
+    }
+complex_nested_dict['company']['employees'].append(Eve)
+print(employees)
+print()
+
+# Challenge 5: Partner Investigation
+# Find out which partner started their relationship with the company in 2020, and return the list of services they provide.
+
+partners=complex_nested_dict['company']["partnerships"]
+for items in partners:
+    print(items)
+    if items["since"]==2020:
+        print(f'{items["partner_name"]} started in 2020 and they offer {items["services"]}')
+print()
+
+# Challenge 6: Total Employees
+# Calculate and print the total number of employees in the company.
+print(f"The total number of employees in {complex_nested_dict['company']['name']} are {len(employees)}")
+
+# Challenge 7: Finding Skills
+# Identify and print the names of employees who have "Python" listed in their skills.
+
+for person_dict in employees:
+    for skill_set in person_dict["skills"]:
+        if "python".casefold() in skill_set.casefold():
+            print(f'{person_dict["name"]} is skilled in Python')
+print()
+
+# Challenge 8: Updating Projects
+# Find and print the names of employees who currently have ongoing projects. For each of these employees, list their ongoing project names.
+for person_dict in employees:
+    if len(person_dict["projects"]["ongoing"]) == 0:
+        continue
+    else:
+        print(f'{person_dict["name"]} has the following ongoing projects:')
+        for project in person_dict["projects"]["ongoing"]:
+            print(f' - {project}')
+
+
+
